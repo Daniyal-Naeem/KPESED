@@ -62,7 +62,7 @@ const Appointment = ({navigation}) => {
                 style={{width: '40%'}}
                 color={COLORS.grey}
                 mode="contained"
-                onPress={() => console.log('Pressed Back')}>
+                onPress={() => navigation.navigate('SignInScreen')}>
                 Back
               </Button>
               <Button

@@ -106,7 +106,7 @@ const Marking = ({navigation}) => {
                 style={{width: '40%', marginLeft: 10}}
                 color={COLORS.green}
                 mode="contained"
-                onPress={() => console.log('Pressed Next')}>
+                onPress={() => navigation.navigate('PersonalInformation')}>
                 Next
               </Button>
             </View>

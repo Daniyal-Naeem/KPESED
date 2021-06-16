@@ -1,4 +1,4 @@
-import React, {createRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,74 +7,31 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from 'react-native';
 import {Surface, Searchbar, Button, List} from 'react-native-paper';
 import COLORS from '../consts/colors';
 import ItemList from '../consts/ItemList';
-import ActionSheet from 'react-native-actions-sheet';
+import DropDownPicker from 'react-native-dropdown-picker';
 const screenHeight = Dimensions.get('screen').height;
 
-const actionSheetRef = createRef();
 
-const InputArray = [
-    {
-      id: '1',
-      title: 'Peshawar',
-    },
-    {
-      id: '2',
-      title: 'Nowshera',
-    },
-    {
-      id: '3',
-      title: 'Mardan',
-    },
-    {
-        id: '4',
-        title: 'Sawabi',
-    },
-    {
-        id: '5',
-        title: 'Peshawar',
-      },
-      {
-        id: '6',
-        title: 'Nowshera',
-      },
-      {
-        id: '7',
-        title: 'Mardan',
-      },
-      {
-          id: '8',
-          title: 'Sawabi',
-      },
-  ];
-  const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.title, textColor]}>{item.title}</Text>
-    </TouchableOpacity>
-  );
 const AllPostsScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => setSearchQuery(query);
 
-  const [selectedId, setSelectedId] = useState(null);
-
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#41d96c" : COLORS.white;
-    const color = item.id === selectedId ? 'white' : 'black';
-
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
-    );
-  }; 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Peshawar', value: 'Peshawar'},
+    {label: 'Charsadda', value: 'Charsadda'},
+    {label: 'Mardan', value: 'Mardan'},
+    {label: 'Nowshera', value: 'Nowshera'},
+    {label: 'Sawabi', value: 'Sawabi'},
+    {label: 'Dir', value: 'Dir'},
+    {label: 'Sawat', value: 'Sawat'},
+    {label: 'Kohat', value: 'Kohat'},
+  ]);
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
       <ScrollView
@@ -82,9 +39,11 @@ const AllPostsScreen = ({navigation}) => {
         bounces={false}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.text_header}
-            onPress={() => navigation.navigate('Appointment')}
-            >Districts</Text>
+            <Text
+              style={styles.text_header}
+              onPress={() => navigation.navigate('Appointment')}>
+              Districts
+            </Text>
           </View>
           <Searchbar
             placeholder="Search"
@@ -94,41 +53,25 @@ const AllPostsScreen = ({navigation}) => {
               width: '90%',
               marginTop: 30,
               marginLeft: 20,
-              borderRadius: 20,
+              borderRadius: 10,
             }}
           />
-          <View
-            style={{
-              justifyContent: 'center',
-              flex: 1,
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                actionSheetRef.current?.setModalVisible();
-              }}>
-              <Button
-                mode="contained"
-                style={styles.actionSheetBtn}
-                color={COLORS.orange}>
-                Select District
-              </Button>
-            </TouchableOpacity>
-
-            <ActionSheet ref={actionSheetRef}>
-              <View>
-                <List.Section style={{alignItems:'center'}}>
-                  <List.Subheader>Districts</List.Subheader>
-                    <FlatList
-                        data={InputArray}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
-                        extraData={selectedId}
-                      />
-                </List.Section>
-              </View>
-            </ActionSheet>
-          </View>
-
+            <DropDownPicker
+              placeholder="Search District"
+              open={open}
+              value={value}
+              items={items}
+              setItems={setItems}
+              setOpen={setOpen}
+              setValue={setValue}
+              style={{
+                width: '90%',
+                marginTop: 10,
+                marginBottom:20,
+                marginLeft: 20,
+                borderRadius: 10,
+              }}
+            />
           <Surface style={styles.surface}>
             <Text style={{color: COLORS.green, fontSize: 25, marginTop: -170}}>
               All Posts
