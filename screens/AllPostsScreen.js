@@ -6,15 +6,12 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
-  FlatList,
 } from 'react-native';
-import {Surface, Searchbar, Button, List} from 'react-native-paper';
+import {Surface, Searchbar} from 'react-native-paper';
 import COLORS from '../consts/colors';
 import ItemList from '../consts/ItemList';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screenHeight = Dimensions.get('screen').height;
-
 
 const AllPostsScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,17 +42,6 @@ const AllPostsScreen = ({navigation}) => {
               Districts
             </Text>
           </View>
-          <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            style={{
-              width: '90%',
-              marginTop: 30,
-              marginLeft: 20,
-              borderRadius: 10,
-            }}
-          />
             <DropDownPicker
               placeholder="Search District"
               open={open}
@@ -67,11 +53,22 @@ const AllPostsScreen = ({navigation}) => {
               style={{
                 width: '90%',
                 marginTop: 10,
-                marginBottom:20,
                 marginLeft: 20,
                 borderRadius: 10,
               }}
             />
+             <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={{
+              width: '90%',
+              marginTop: 10,
+              marginLeft: 20,
+              marginBottom:20,
+              borderRadius: 10,
+            }}
+          />
           <Surface style={styles.surface}>
             <Text style={{color: COLORS.green, fontSize: 25, marginTop: -170}}>
               All Posts

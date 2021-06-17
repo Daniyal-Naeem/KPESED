@@ -13,7 +13,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 const screenHeight = Dimensions.get('screen').height;
 
 const PersonalInformation = ({navigation}) => {
-  const [checked, setChecked] = useState('first');
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -33,7 +32,7 @@ const PersonalInformation = ({navigation}) => {
         bounces={false}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.text_header}>KPESED eTransfer</Text>
+            <Text style={styles.text_header} onPress={() => navigation.navigate('PriorityScreen')}>KPESED eTransfer</Text>
           </View>
           <Surface style={styles.surface}>
             <Text style={styles.heading}>Personal Information</Text>
@@ -82,12 +81,27 @@ const PersonalInformation = ({navigation}) => {
                 onChangeText={() => {}}
               />
             </View>
+            <Text>Gander & DOB</Text>
+            <DropDownPicker
+              placeholder="Select Gander"
+              open={open}
+              value={value}
+              items={items}
+              setItems={setItems}
+              setOpen={setOpen}
+              setValue={setValue}
+              style={{
+                  width: '73%',
+                  marginTop: 10,
+                  marginLeft: 50,
+                  marginBottom:10
+                }}
+                /> 
             <View>
               <Text
                 style={{
                   color: COLORS.green,
                   fontWeight: 'bold',
-                  marginTop: 20,
                 }}>
                 Highest Qualification
               </Text>
@@ -154,7 +168,7 @@ const styles = StyleSheet.create({
     color: COLORS.green,
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: -200,
+    marginTop: -150,
     marginBottom: 30,
     marginLeft: 150,
     width: '90%',

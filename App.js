@@ -10,6 +10,8 @@ import AllPostsScreen from './screens/AllPostsScreen';
 import Appointment from './screens/Appointment';
 import Marking from './screens/Marking';
 import PersonalInformation from './screens/PersonalInformation';
+import PriorityScreen from './screens/PriorityScreen';
+import Posting from './screens/Posting';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +26,8 @@ const App = () => {
         <Stack.Screen name="Appointment" component={Appointment} />
         <Stack.Screen name="Marking" component={Marking}/>
         <Stack.Screen name="PersonalInformation" component={PersonalInformation}/>
+        <Stack.Screen name="PriorityScreen" component={PriorityScreen}/>
+        <Stack.Screen name="Posting" component={Posting}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
