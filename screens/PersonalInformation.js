@@ -11,7 +11,7 @@ import {TextInput, Surface, Button} from 'react-native-paper';
 import COLORS from '../consts/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screenHeight = Dimensions.get('screen').height;
-
+import AppButton from '../components/AppButton';
 const PersonalInformation = ({navigation}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -135,13 +135,11 @@ const PersonalInformation = ({navigation}) => {
               />
             </View>
             <View style={styles.bottumBtn}>
-              <Button
+              <AppButton
                 style={{width: '40%'}}
-                color={COLORS.grey}
-                mode="contained"
-                onPress={() => navigation.navigate('Appointment')}>
-                Back
-              </Button>
+                color={COLORS.primary}
+               title='back'
+                onPress={() => navigation.navigate('Appointment')}/>
               <Button
                 style={{width: '40%', marginLeft: 10}}
                 color={COLORS.green}

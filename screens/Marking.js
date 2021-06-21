@@ -7,9 +7,9 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {Surface, RadioButton, Button, Checkbox} from 'react-native-paper';
+import {Surface, RadioButton, Checkbox} from 'react-native-paper';
 import COLORS from '../consts/colors';
-
+import AppButton from '../components/AppButton';
 const screenHeight = Dimensions.get('screen').height;
 
 const Marking = ({navigation}) => {
@@ -95,20 +95,17 @@ const Marking = ({navigation}) => {
             </View>
             </View>
             <View style={styles.bottumBtn}>
-              <Button
-                style={{width: '40%'}}
-                color={COLORS.grey}
-                mode="contained"
-                onPress={() => navigation.navigate('Appointment')}>
-                Back
-              </Button>
-              <Button
-                style={{width: '40%', marginLeft: 10}}
+              <AppButton
+                title='back'
+                color={COLORS.primary}
+                style={{width:150}}
+                onPress={() => navigation.navigate('Appointment')}/>
+        
+              <AppButton
+                title="next"
                 color={COLORS.green}
-                mode="contained"
-                onPress={() => navigation.navigate('PersonalInformation')}>
-                Next
-              </Button>
+                style={{marginLeft:20, width:150}}
+                onPress={() => navigation.navigate('PersonalInformation')}/>
             </View>
           </Surface>
         </View>

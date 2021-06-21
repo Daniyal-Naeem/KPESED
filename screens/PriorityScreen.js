@@ -7,9 +7,10 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {TextInput, Surface, Button, List} from 'react-native-paper';
+import {TextInput, Surface, List} from 'react-native-paper';
 import COLORS from '../consts/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
+import AppButton from '../components/AppButton';
 const screenHeight = Dimensions.get('screen').height;
 
 const PriorityScreen = ({navigation}) => {
@@ -146,29 +147,23 @@ const PriorityScreen = ({navigation}) => {
                 </List.Accordion>
               </List.Section>
             </View>
+
             <View style={styles.bottumBtn}>
-              <Button
-                style={{width: '30%'}}
-                color={COLORS.grey}
-                mode="contained"
-                onPress={() => navigation.navigate('Appointment')}>
-                Back
-              </Button>
-              <Button
-                style={{width: '30%', marginLeft: 10}}
+              <AppButton
+                title="back"
+                style={{width:100,marginRight:10}}
+                color={COLORS.primary}
+                onPress={() => navigation.navigate('Marking')}/>
+              <AppButton
+                title="cancel"
                 color={COLORS.red}
-                mode="contained"
-                onPress={() => navigation.navigate('Marking')}>
-                Cancel
-              </Button>
-              <Button
-                style={{width: '30%', marginLeft: 10}}
+                style={{width:100,marginRight:10}}
+                onPress={() => navigation.navigate('Appointment')}/>
+                   <AppButton
+                title="submit"
                 color={COLORS.green}
-                mode="contained"
-                onPress={() => navigation.navigate('Posting')}>
-                Submit
-              </Button>
-            </View>
+                onPress={() => navigation.navigate('Posting')}/>
+            </View> 
           </Surface>
         </View>
       </ScrollView>

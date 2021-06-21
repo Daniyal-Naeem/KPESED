@@ -10,49 +10,45 @@ import {
   Dimensions,
 } from 'react-native';
 import COLORS from '../consts/colors';
-import {Button, TextInput, Surface} from 'react-native-paper';
+import { TextInput, Surface} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-
-
+import AppButton from '../components/AppButton';
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(4).label('Password'),
 });
 
-const screenHeight = Dimensions.get('screen').height
+const screenHeight = Dimensions.get('screen').height;
 const SignInScreen = ({navigation}) => {
-
-  const [email,setEmail] = useState("")
-  const [password,setPassword] = useState("")
-  
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-
-    setEmail("")
-    setPassword("")
+    setEmail('');
+    setPassword('');
   };
+  
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
-      <ScrollView 
-      contentContainerStyle={{minHeight: screenHeight}} 
-      bounces={false}>
+      <ScrollView
+        contentContainerStyle={{minHeight: screenHeight}}
+        bounces={false}>
         <View style={styles.container}>
           <View
             style={{
               backgroundColor: COLORS.green,
               height: '70%',
-              borderBottomLeftRadius: 40,
-              borderBottomRightRadius: 40,
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
               paddingHorizontal: 20,
             }}>
             <View style={styles.header}>
               <Text style={styles.text_header}>LOGIN</Text>
               <Image
-              style={{width: 100, height:100, marginTop: 40}}
-              source={require('../assets/kplogo.jpg')}
-            />
+                style={{width: 100, height: 100, marginTop: 40}}
+                source={require('../assets/kplogo.jpg')}
+              />
             </View>
           </View>
           <Surface style={styles.surface}>
@@ -70,10 +66,12 @@ const SignInScreen = ({navigation}) => {
                       keyboardType="email-address"
                       style={styles.textInput}
                       autoCapitalize="none"
-                      onChangeText={handleChange("email")}
+                      onChangeText={handleChange('email')}
                     />
                   </View>
-                  <Text style={{color:'red'}}>{errors.email}</Text>
+                  <View style={{marginLeft:-110}}>
+                  <Text style={{color: 'red'}}>{errors.email}</Text>
+                  </View>
                   <View style={styles.action}>
                     <TextInput
                       mode="outlined"
@@ -82,31 +80,30 @@ const SignInScreen = ({navigation}) => {
                       secureTextEntry
                       style={styles.textInput}
                       autoCapitalize="none"
-                      onChangeText={handleChange("password")}
+                      onChangeText={handleChange('password')}
                     />
                   </View>
-                  <Text style={{color:'red'}}>{errors.password}</Text>
+                  <View style={{marginLeft:-82}}>
+                  <Text style={{color: 'red'}}>{errors.password}</Text>
+                  </View>
                   <TouchableOpacity>
-                    <Text 
-                    style={{color: '#663399', marginTop: 15}}
-                    onPress={() => navigation.navigate('AllPostsScreen')}
-                    >
+                    <Text
+                      style={{color: '#663399', marginTop: 15}}
+                      onPress={() => navigation.navigate('AllPostsScreen')}>
                       Forgot password?
                     </Text>
                   </TouchableOpacity>
                   <View style={styles.button}>
-                    <Button
-                      mode="contained"
-                      color= {COLORS.green}
-                      style={{width: 250, height: 50, borderRadius: 10}}
-                      onPress={() => handleSubmit()}>
-                      Login
-                    </Button>
-                    <Button
-                      mode="Text"
-                      onPress={() => navigation.navigate('HomeScreen')}>
-                      CREATE ACCOUNT
-                    </Button>
+                    <AppButton
+                      title='Login'
+                      color={COLORS.green}
+                      style={{width: 200, height: 40, borderRadius: 10}}
+                      onPress={() => handleSubmit()}/>
+                    <AppButton
+                      title="create account"
+                      color={COLORS.orange}
+                      style={{width: 200, height: 40, borderRadius: 10, marginTop:10}}
+                      onPress={() => navigation.navigate('HomeScreen')}/>
                   </View>
                 </>
               )}
@@ -126,14 +123,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
   },
   surface: {
-    borderRadius: 30,
+    borderRadius: 50,
     paddingTop: 10,
     height: '45%',
-    width: '80%',
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4,
-    marginLeft: 40,
+    marginLeft: 20,
     marginTop: -250,
   },
 
@@ -147,7 +144,7 @@ const styles = StyleSheet.create({
   },
   text_header: {
     alignItems: 'center',
-    color:COLORS.white,
+    color: COLORS.white,
     fontWeight: 'bold',
     fontSize: 15,
   },
@@ -163,17 +160,16 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-    color: '#05375a',
+    paddingLeft: 25,
+    paddingRight: 25,
+    color: COLORS.orange,
     height: 45,
-    width: 80,
-    borderRadius:20
   },
   button: {
-    alignContent:'center',
+    alignContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+    elevation:40
   },
   textSign: {
     fontSize: 18,

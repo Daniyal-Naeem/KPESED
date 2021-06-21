@@ -7,9 +7,9 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {Surface, RadioButton, Button} from 'react-native-paper';
+import {Surface, RadioButton} from 'react-native-paper';
 import COLORS from '../consts/colors';
-
+import AppButton from '../components/AppButton';
 const screenHeight = Dimensions.get('screen').height;
 
 const Appointment = ({navigation}) => {
@@ -58,20 +58,16 @@ const Appointment = ({navigation}) => {
               </Text>
             </View>
             <View style={styles.bottumBtn}>
-              <Button
-                style={{width: '40%'}}
-                color={COLORS.grey}
-                mode="contained"
-                onPress={() => navigation.navigate('SignInScreen')}>
-                Back
-              </Button>
-              <Button
-                style={{width: '40%', marginLeft: 10}}
+              <AppButton
+                title="back"
+                color={COLORS.primary}
+                style={{ width:150}}
+                onPress={() => navigation.navigate('SignInScreen')}/>
+              <AppButton
+                title="next"
                 color={COLORS.green}
-                mode="contained"
-                onPress={() => navigation.navigate('Marking')}>
-                Next
-              </Button>
+                style={{marginLeft:20, width:150}}
+                onPress={() => navigation.navigate('Marking')}/>
             </View>
           </Surface>
         </View>
@@ -98,7 +94,6 @@ const styles = StyleSheet.create({
   bottumBtn: {
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
   },
   radio: {
     flexDirection: 'row',

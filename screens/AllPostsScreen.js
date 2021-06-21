@@ -42,6 +42,17 @@ const AllPostsScreen = ({navigation}) => {
               Districts
             </Text>
           </View>
+             <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={{
+              width: '90%',
+              marginTop: 10,
+              marginLeft: 20,
+              borderRadius: 10,
+            }}
+          />
             <DropDownPicker
               placeholder="Search District"
               open={open}
@@ -55,20 +66,9 @@ const AllPostsScreen = ({navigation}) => {
                 marginTop: 10,
                 marginLeft: 20,
                 borderRadius: 10,
+                marginBottom:20,
               }}
             />
-             <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            style={{
-              width: '90%',
-              marginTop: 10,
-              marginLeft: 20,
-              marginBottom:20,
-              borderRadius: 10,
-            }}
-          />
           <Surface style={styles.surface}>
             <Text style={{color: COLORS.green, fontSize: 25, marginTop: -170}}>
               All Posts
