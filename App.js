@@ -11,6 +11,7 @@ import Appointment from './screens/Appointment';
 import Marking from './screens/Marking';
 import PersonalInformation from './screens/PersonalInformation';
 import PriorityScreen from './screens/PriorityScreen';
+import ChooseLocation from './screens/ChooseLocation';
 import Posting from './screens/Posting';
 
 const Stack = createStackNavigator();
@@ -18,7 +19,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: true}}>
         <Stack.Screen name="OnBoardScreen" component={OnBoardScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -28,6 +29,7 @@ const App = () => {
         <Stack.Screen name="PersonalInformation" component={PersonalInformation}/>
         <Stack.Screen name="PriorityScreen" component={PriorityScreen}/>
         <Stack.Screen name="Posting" component={Posting}/>
+        <Stack.Screen name="ChooseLocation" component={ChooseLocation}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

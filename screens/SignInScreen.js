@@ -10,10 +10,11 @@ import {
   Dimensions,
 } from 'react-native';
 import COLORS from '../consts/colors';
-import { TextInput, Surface} from 'react-native-paper';
+import {TextInput, Surface} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AppButton from '../components/AppButton';
+import LinearGradient from 'react-native-linear-gradient';
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(4).label('Password'),
@@ -28,16 +29,19 @@ const SignInScreen = ({navigation}) => {
     setEmail('');
     setPassword('');
   };
-  
+
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
       <ScrollView
         contentContainerStyle={{minHeight: screenHeight}}
         bounces={false}>
         <View style={styles.container}>
-          <View
+          <LinearGradient
+            start={{x: 0.0, y: 0.25}}
+            end={{x: 0.5, y: 1.0}}
+            locations={[0, 0.5, 0.6]}
+            colors={['#388e3c', '#4caf50', '#81c784']}
             style={{
-              backgroundColor: COLORS.green,
               height: '70%',
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
@@ -50,7 +54,7 @@ const SignInScreen = ({navigation}) => {
                 source={require('../assets/kplogo.jpg')}
               />
             </View>
-          </View>
+          </LinearGradient>
           <Surface style={styles.surface}>
             <Formik
               initialValues={{email: '', password: ''}}
@@ -69,8 +73,8 @@ const SignInScreen = ({navigation}) => {
                       onChangeText={handleChange('email')}
                     />
                   </View>
-                  <View style={{marginLeft:-110}}>
-                  <Text style={{color: 'red'}}>{errors.email}</Text>
+                  <View style={{marginLeft: -110}}>
+                    <Text style={{color: 'red'}}>{errors.email}</Text>
                   </View>
                   <View style={styles.action}>
                     <TextInput
@@ -83,27 +87,34 @@ const SignInScreen = ({navigation}) => {
                       onChangeText={handleChange('password')}
                     />
                   </View>
-                  <View style={{marginLeft:-82}}>
-                  <Text style={{color: 'red'}}>{errors.password}</Text>
+                  <View style={{marginLeft: -82}}>
+                    <Text style={{color: 'red'}}>{errors.password}</Text>
                   </View>
                   <TouchableOpacity>
                     <Text
-                      style={{color: '#663399', marginTop: 15}}
+                      style={{color: '#663399', marginTop: 5}}
                       onPress={() => navigation.navigate('AllPostsScreen')}>
                       Forgot password?
                     </Text>
                   </TouchableOpacity>
                   <View style={styles.button}>
                     <AppButton
-                      title='Login'
+                      title="Login"
                       color={COLORS.green}
                       style={{width: 200, height: 40, borderRadius: 10}}
-                      onPress={() => handleSubmit()}/>
+                      onPress={() => handleSubmit()}
+                    />
                     <AppButton
                       title="create account"
                       color={COLORS.orange}
-                      style={{width: 200, height: 40, borderRadius: 10, marginTop:10}}
-                      onPress={() => navigation.navigate('HomeScreen')}/>
+                      style={{
+                        width: 200,
+                        height: 40,
+                        borderRadius: 10,
+                        marginTop: 10,
+                      }}
+                      onPress={() => navigation.navigate('ChooseLocation')}
+                    />
                   </View>
                 </>
               )}
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 4,
     marginLeft: 20,
-    marginTop: -250,
+    marginTop: -300,
   },
 
   header: {
@@ -168,8 +179,8 @@ const styles = StyleSheet.create({
   button: {
     alignContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    elevation:40
+    marginTop: 10,
+    elevation: 40,
   },
   textSign: {
     fontSize: 18,

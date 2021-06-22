@@ -5,6 +5,7 @@ import COLORS from '../consts/colors';
 
 const AppButton = ({ title, onPress, color, style}) => {
   return (
+  
       <Button
       style={style}
       color={color}

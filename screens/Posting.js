@@ -7,7 +7,7 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {TextInput, Surface, List, Button} from 'react-native-paper';
+import {TextInput, Surface, List} from 'react-native-paper';
 import COLORS from '../consts/colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AppButton from '../components/AppButton';

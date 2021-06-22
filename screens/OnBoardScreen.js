@@ -9,6 +9,7 @@ import {
   Image
 } from 'react-native';
 import COLORS from '../consts/colors';
+
 const OnBoardScreen = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
