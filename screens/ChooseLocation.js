@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, Platform } from 'react-native';
 import MapView, {Marker, AnimatedRegion} from 'react-native-maps';
 import {GOOGLE_MAP_KEY} from '../consts/googleMapKey';
 import MapViewDirections from 'react-native-maps-directions';
@@ -11,8 +11,9 @@ const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.9222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const ChooseLocation = () => {
+const ChooseLocation = ({ navigation }) => {
   const mapRef = useRef();
+  const markerRef = useRef();
 
   const [state, setState] = useState({
     curLoc: {
@@ -52,24 +53,61 @@ const ChooseLocation = () => {
       });
     }
   };
-  useEffect(() => {
-    const interval = setInterval(() => {
-        getLiveLocation()
-    }, 4000);
-    return () => clearInterval(interval)
-})
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     getLiveLocation();
+  //   }, 4000);
+  //   return () => clearInterval(interval);
+  // });
+
+  const onPressLocation = () => {
+    navigation.navigate('SearchLocation', {getCordinates: fetchValue});
+  };
+  const fetchValue = data => {
+    console.log('this is data', data);
+    setState({
+      ...state,
+      destinationCords: {
+        latitude: data.destinationCords.latitude,
+        longitude: data.destinationCords.longitude,
+      },
+    });
+  };
+
+  const animate = (latitude, longitude) => {
+    const newCoordinate = {latitude, longitude};
+    if (Platform.OS == 'android') {
+      if (markerRef.current) {
+        markerRef.current.animateMarkerToCoordinate(newCoordinate, 7000);
+      }
+    } else {
+      coordinate.timing(newCoordinate).start();
+    }
+  };
+
+  const onCenter = () => {
+    mapRef.current.animateToRegion({
+      latitude: curLoc.latitude,
+      longitude: curLoc.longitude,
+      latitudeDelta: LATITUDE_DELTA,
+      longitudeDelta: LONGITUDE_DELTA,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
         <MapView
           ref={mapRef}
-          style={styles.map}
+          style={StyleSheet.absoluteFill}
           initialRegion={{
             ...curLoc,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}>
           <Marker.Animated
+            ref={markerRef}
             coordinate={coordinate}
             image={imagePath.icCurLoc}
           />
@@ -80,6 +118,7 @@ const ChooseLocation = () => {
               image={imagePath.icGreenMarker}
             />
           )}
+
           {Object.keys(destinationCords).length > 0 && (
             <MapViewDirections
               origin={curLoc}
@@ -112,6 +151,21 @@ const ChooseLocation = () => {
             />
           )}
         </MapView>
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+          }}
+          onPress={onCenter}>
+          <Image source={imagePath.greenIndicator} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.bottomCard}>
+        <Text>Where are you going..?</Text>
+        <TouchableOpacity onPress={onPressLocation} style={styles.inpuStyle}>
+          <Text>Choose your location</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -121,10 +175,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  map: {
-    ...StyleSheet.absoluteFillObject,
+  bottomCard: {
+    backgroundColor: 'white',
     width: '100%',
-    height: '100%',
+    padding: 60,
+    borderTopEndRadius: 24,
+    borderTopStartRadius: 24,
+  },
+  inpuStyle: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    borderWidth: 1,
+    alignItems: 'center',
+    height: 48,
+    justifyContent: 'center',
+    marginTop: 16,
   },
 });
 

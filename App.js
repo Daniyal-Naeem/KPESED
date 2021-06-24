@@ -13,6 +13,7 @@ import PersonalInformation from './screens/PersonalInformation';
 import PriorityScreen from './screens/PriorityScreen';
 import ChooseLocation from './screens/ChooseLocation';
 import Posting from './screens/Posting';
+import SearchLocation from './screens/SearchLocation';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ const App = () => {
         <Stack.Screen name="PriorityScreen" component={PriorityScreen}/>
         <Stack.Screen name="Posting" component={Posting}/>
         <Stack.Screen name="ChooseLocation" component={ChooseLocation}/>
+        <Stack.Screen name="SearchLocation" component={SearchLocation}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

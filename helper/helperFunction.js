@@ -3,6 +3,7 @@ import Geolocation from 'react-native-geolocation-service';
 
 export const getCurrentLocation = () =>
     new Promise((resolve, reject) => {
+        Geolocation.watchPosition
         Geolocation.getCurrentPosition(
             position => {
                 const cords = {
@@ -29,7 +30,7 @@ export const locationPermission = () => new Promise(async (resolve, reject) => {
         } catch (error) {
             return reject(error);
         }
-    }
+    } 
     return PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     ).then((granted) => {
@@ -42,3 +43,24 @@ export const locationPermission = () => new Promise(async (resolve, reject) => {
         return reject(error);
     });
 });
+
+const showError = (message) => {
+    ({
+        message,
+        type: 'danger',
+        icon: 'danger'
+    })
+}
+
+const showSuccess = (message) => {
+    showMessage({
+        message,
+        type: 'success',
+        icon: 'success'
+    })
+}
+
+export {
+    showError,
+    showSuccess
+}
