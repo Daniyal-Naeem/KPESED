@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Dimensions,
+  Button,
 } from 'react-native';
 import COLORS from '../consts/colors';
 import {TextInput, Surface} from 'react-native-paper';
@@ -15,6 +16,8 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AppButton from '../components/AppButton';
 import LinearGradient from 'react-native-linear-gradient';
+import { startService, stopService } from '../helper/foregroundServices';
+
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(4).label('Password'),
@@ -22,6 +25,7 @@ const validationSchema = Yup.object().shape({
 
 const screenHeight = Dimensions.get('screen').height;
 const SignInScreen = ({navigation}) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -115,6 +119,8 @@ const SignInScreen = ({navigation}) => {
                       }}
                       onPress={() => navigation.navigate('ChooseLocation')}
                     />
+                <Button title="Start Fservice" onPress={() => {startService()}}/>
+                <Button title="Stop Fservice" onPress={() => {stopService()}}/>
                   </View>
                 </>
               )}

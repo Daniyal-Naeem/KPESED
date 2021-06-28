@@ -2,6 +2,7 @@
   package="com.kpesed">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
       android:name=".MainApplication"
@@ -24,5 +25,9 @@
        <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyCsSStfc_di-8cY5yH1i0LxIEC3tqGrPFs"/>
+     
+     <service android:name="com.voximplant.foregroundservice.VIForegroundService"> </service>
+
+
     </application>
 </manifest>
