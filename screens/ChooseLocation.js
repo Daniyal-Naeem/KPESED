@@ -1,8 +1,9 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {GOOGLE_MAP_KEY} from '../consts/googleMapKey';
 import MapViewDirections from 'react-native-maps-directions';
+import {locationPermission, getCurrentLocation} from '../helper/helperFunction'
 
 const ChooseLocation = () => {
   const mapRef = useRef();
@@ -20,6 +21,33 @@ const ChooseLocation = () => {
       longitudeDelta: 0.0421,
     },
   });
+
+  const getLiveLocation = async () => {
+    const locPermissionDenied = await locationPermission();
+    if (locPermissionDenied) {
+      const {latitude, longitude} = await getCurrentLocation();
+      console.log('get live location after 4 second');
+      animate(latitude, longitude);
+      setState({
+        ...state,
+        curLoc: {latitude, longitude},
+        coordinate: new AnimatedRegion({
+          latitude: latitude,
+          longitude: longitude,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
+        }),
+      });
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getLiveLocation();
+    }, 4000);
+    return () => clearInterval(interval);
+  });
+
   const {pickupCords, dropCords} = state;
   
   const locationArray=[
