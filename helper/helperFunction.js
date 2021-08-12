@@ -1,6 +1,12 @@
 import { PermissionsAndroid, Platform } from "react-native";
 import Geolocation from 'react-native-geolocation-service';
 
+
+const permissions =  PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+// const permissions = [
+//     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, 
+//     PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
+// ]
 export const getCurrentLocation = () =>
     new Promise((resolve, reject) => {
         Geolocation.watchPosition
@@ -30,10 +36,17 @@ export const locationPermission = () => new Promise(async (resolve, reject) => {
         } catch (error) {
             return reject(error);
         }
-    } 
+    }
+    const _granted = await PermissionsAndroid.check(permissions)
+    console.log("permission already granted", _granted);
+    if (_granted){ 
+         return resolve("granted")}
+    console.log("requesting permission");
     return PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        // PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        permissions
     ).then((granted) => {
+        console.log("request-response", granted);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             resolve("granted");
         }
