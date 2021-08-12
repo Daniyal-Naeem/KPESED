@@ -33,7 +33,9 @@ const SignInScreen = ({navigation}) => {
     setEmail('');
     setPassword('');
   };
-
+ var time = new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+  console.log("start", startService, time)
+  console.log("stop", stopService, time)
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
       <ScrollView
@@ -119,13 +121,15 @@ const SignInScreen = ({navigation}) => {
                       }}
                       onPress={() => navigation.navigate('ChooseLocation')}
                     />
-                <Button title="Start Fservice" onPress={() => {startService()}}/>
-                <Button title="Stop Fservice" onPress={() => {stopService()}}/>
                   </View>
                 </>
               )}
             </Formik>
           </Surface>
+          <View style={styles.action}>
+          <Button title="Start Fservice" onPress={() => {startService()}}/>
+         <Button title="Stop Fservice" onPress={() => {stopService()}}/>
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
