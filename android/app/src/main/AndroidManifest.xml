@@ -28,8 +28,5 @@
      
      <service android:name="com.voximplant.foregroundservice.VIForegroundService"> </service>
     
-    <service android:name="com.transistorsoft.locationmanager.service.TrackingService" android:foregroundServiceType="location" />
-    <service android:name="com.transistorsoft.locationmanager.service.LocationRequestService" android:foregroundServiceType="location" />
-
     </application>
 </manifest>
