@@ -1,6 +1,6 @@
 //import libraries
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View,StyleSheet,} from 'react-native';
 
 //reusable components
@@ -9,8 +9,8 @@ import CustomBtn from '../components/CustomBtn';
 import { showError } from '../helper/helperFunction';
 
 const SearchLocation = (props) => {
+  
     const navigation = useNavigation()
-
     const [state, setState] = useState({
         destinationCords: {}
     })
