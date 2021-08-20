@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Dimensions,
-  Button,
 } from 'react-native';
 import COLORS from '../consts/colors';
 import {TextInput, Surface} from 'react-native-paper';
@@ -16,7 +15,34 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AppButton from '../components/AppButton';
 import LinearGradient from 'react-native-linear-gradient';
-import { startService, stopService } from '../helper/foregroundServices';
+
+import { PermissionsAndroid } from 'react-native';
+import RNLocation from 'react-native-location';
+import ReactNativeForegroundService from '@supersami/rn-foreground-service';
+
+
+RNLocation.configure({
+  distanceFilter: 100, // Meters
+  desiredAccuracy: {
+    ios: 'best',
+    android: 'balancedPowerAccuracy',
+  },
+  // Android only
+  androidProvider: 'auto',
+  interval: 5000, // Milliseconds
+  fastestInterval: 10000, // Milliseconds
+  maxWaitTime: 5000, // Milliseconds
+  // iOS Only
+  activityType: 'other',
+  allowsBackgroundLocationUpdates: false,
+  headingFilter: 1, // Degrees
+  headingOrientation: 'portrait',
+  pausesLocationUpdatesAutomatically: false,
+  showsBackgroundLocationIndicator: false,
+});
+let locationSubscription = null;
+let locationTimeout = null;
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -26,6 +52,62 @@ const validationSchema = Yup.object().shape({
 const screenHeight = Dimensions.get('screen').height;
 const SignInScreen = ({navigation}) => {
 
+  useEffect(() => {
+    const requestPermission = async () => {
+        const backgroundgranted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+            {
+              title: 'Background Location Permission',
+              message:
+                'We need access to your location ' +
+                'so you can get live quality updates.',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          if (backgroundgranted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('permission granted!');
+
+            
+ReactNativeForegroundService.add_task(
+() => {
+  RNLocation.requestPermission({
+    ios: 'whenInUse',
+    android: {
+      detail: 'fine',
+    },
+  }).then((granted) => {
+    console.log('Location Permissions: ', granted);
+    // if has permissions try to obtain location with RN location
+    if (granted) {
+      locationSubscription && locationSubscription();
+      locationSubscription = RNLocation.subscribeToLocationUpdates(
+        ([locations]) => {
+          locationSubscription();
+          locationTimeout && clearTimeout(locationTimeout);
+          console.log(locations);
+        },
+      );
+    } else {
+      locationSubscription && locationSubscription();
+      locationTimeout && clearTimeout(locationTimeout);
+      console.log('no permissions to obtain location');
+    }
+  });
+},
+{
+  delay: 1000,
+  onLoop: true,
+  taskId: 'taskid',
+  onError: (e) => console.log('Error logging:', e),
+},
+);
+          }
+    }
+    requestPermission();
+},[])
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,8 +116,7 @@ const SignInScreen = ({navigation}) => {
     setPassword('');
   };
  var time = new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
-  console.log("start", startService, time)
-  console.log("stop", stopService, time)
+
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
       <ScrollView
@@ -126,10 +207,7 @@ const SignInScreen = ({navigation}) => {
               )}
             </Formik>
           </Surface>
-          <View style={styles.action}>
-          <Button title="Start Fservice" onPress={() => {startService()}}/>
-         <Button title="Stop Fservice" onPress={() => {stopService()}}/>
-          </View>
+  
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
