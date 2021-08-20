@@ -27,17 +27,11 @@ const ChooseLocation = () => {
     if (locPermissionDenied) {
       const {latitude, longitude} = await getCurrentLocation();
       console.log('get live location after 4 second');
-      animate(latitude, longitude);
       setState({
         ...state,
         curLoc: {latitude, longitude},
-        coordinate: new AnimatedRegion({
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
-        }),
       });
+      console.log('source', pickupCords, 'destination', dropCords);
     }
   };
 
